@@ -144,10 +144,18 @@ function resolveConflicts(serverQuotes) {
     alert('Quotes synced with server successfully!');
 }
 
+// Function to sync quotes between local storage and server
+async function syncQuotes() {
+    await fetchQuotesFromServer();
+    for (const quote of quotes) {
+        await postQuoteToServer(quote);
+    }
+}
+
 // Initial setup
 document.addEventListener('DOMContentLoaded', () => {
     createAddQuoteForm();
     populateCategories();
     showRandomQuote();
-    setInterval(fetchQuotesFromServer, 60000); // Fetch quotes from server every 60 seconds
+    setInterval(syncQuotes, 60000); // Sync quotes with server every 60 seconds
 });

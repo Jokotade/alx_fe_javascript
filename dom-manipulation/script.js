@@ -10,7 +10,7 @@ function showRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const quote = quotes[randomIndex];
     const quoteDisplay = document.getElementById('quoteDisplay');
-    quoteDisplay.innerText = `"${quote.text}" - ${quote.category}`;
+    quoteDisplay.textContent = `"${quote.text}" - ${quote.category}`;
     sessionStorage.setItem('lastViewedQuote', JSON.stringify(quote));
 }
 
@@ -83,7 +83,7 @@ function populateCategories() {
     uniqueCategories.forEach(category => {
         const option = document.createElement('option');
         option.value = category;
-        option.innerText = category;
+        option.textContent = category;
         categoryFilter.appendChild(option);
     });
     const lastSelectedCategory = localStorage.getItem('lastSelectedCategory');
@@ -101,7 +101,7 @@ function filterQuotes() {
     quoteDisplay.innerHTML = '';
     filteredQuotes.forEach(quote => {
         const quoteElement = document.createElement('div');
-        quoteElement.innerText = `"${quote.text}" - ${quote.category}`;
+        quoteElement.textContent = `"${quote.text}" - ${quote.category}`;
         quoteDisplay.appendChild(quoteElement);
     });
 }

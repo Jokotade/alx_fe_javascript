@@ -106,9 +106,31 @@ function filterQuotes() {
     });
 }
 
+// Function to simulate fetching quotes from a server
+function fetchQuotesFromServer() {
+    fetch('https://jsonplaceholder.typicode.com/posts') // Replace with actual API endpoint
+        .then(response => response.json())
+        .then(data => {
+            const serverQuotes = data.map(item => ({ text: item.title, category: 'Server' }));
+            resolveConflicts(serverQuotes);
+        })
+        .catch(error => console.error('Error fetching quotes from server:', error));
+}
+
+// Function to resolve conflicts between local and server data
+function resolveConflicts(serverQuotes) {
+    const localQuotes = JSON.parse(localStorage.getItem('quotes')) || [];
+    const mergedQuotes = [...new Set([...localQuotes, ...serverQuotes])];
+    localStorage.setItem('quotes', JSON.stringify(mergedQuotes));
+    quotes = mergedQuotes;
+    populateCategories();
+    alert('Quotes synced with server successfully!');
+}
+
 // Initial setup
 document.addEventListener('DOMContentLoaded', () => {
     createAddQuoteForm();
     populateCategories();
     showRandomQuote();
+    setInterval(fetchQuotesFromServer, 60000); // Fetch quotes from server every 60 seconds
 });

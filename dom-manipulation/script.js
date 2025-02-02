@@ -15,7 +15,7 @@ function showRandomQuote() {
 }
 
 // Function to create and add a new quote
-function addQuote() {
+async function addQuote() {
     const newQuoteText = document.getElementById('newQuoteText').value;
     const newQuoteCategory = document.getElementById('newQuoteCategory').value;
 
@@ -27,6 +27,7 @@ function addQuote() {
         document.getElementById('newQuoteText').value = '';
         document.getElementById('newQuoteCategory').value = '';
         alert('Quote added successfully!');
+        await postQuoteToServer(newQuote);
     } else {
         alert('Please enter both quote text and category.');
     }
@@ -115,6 +116,21 @@ async function fetchQuotesFromServer() {
         resolveConflicts(serverQuotes);
     } catch (error) {
         console.error('Error fetching quotes from server:', error);
+    }
+}
+
+// Function to post a new quote to the server
+async function postQuoteToServer(quote) {
+    try {
+        await fetch('https://jsonplaceholder.typicode.com/posts', { // Replace with actual API endpoint
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quote)
+        });
+    } catch (error) {
+        console.error('Error posting quote to server:', error);
     }
 }
 

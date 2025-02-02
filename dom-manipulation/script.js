@@ -150,6 +150,7 @@ async function syncQuotes() {
     for (const quote of quotes) {
         await postQuoteToServer(quote);
     }
+    alert('Quotes synced with server!');
 }
 
 // Initial setup
